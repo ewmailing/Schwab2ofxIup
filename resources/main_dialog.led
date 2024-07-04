@@ -1,0 +1,36 @@
+
+textOptionsInfo = TEXT
+[
+	FORMATTING=NO,
+	MULTILINE=YES,
+	EXPAND=YES,
+	VISIBLECOLUMNS=40,
+	VISIBLELINES=12,
+	PADDING="10x10",
+#	SCROLLBAR=YES,
+	WORDWRAP=NO,
+	READONLY=YES,
+	VALUE="Options Info",
+] (key_act)
+
+
+
+buttonParse = BUTTON
+[
+	ACTIVE=YES,
+]("Choose Schwab JSON File", actionParse)
+
+
+dlg = DIALOG[TITLE="Schwab2ofxIup", RESIZE=NO]
+(
+ 	VBOX[MARGIN=10x10, GAP=10]
+	(
+		HBOX[]
+		(
+			buttonParse,
+			
+		),
+  )
+)
+
+
