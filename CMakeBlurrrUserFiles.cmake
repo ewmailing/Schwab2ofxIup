@@ -13,13 +13,44 @@
 set(BLURRR_USE_MANUAL_FILE_LISTING_FOR_RESOURCE_FILES TRUE)
 set(BLURRR_USE_MANUAL_FILE_LISTING_FOR_SCRIPT_FILES TRUE)
 
+
+# HACK: Because the files I need are in a subtree, and not in the correct directory,
+# I am copying the files to the correct directory.
+# I added these to the .gitignore
+# I tried referencing them directly from the subtree, but the Blurrr build process puts the files into the wrong directory (was creating Schwab2ofx in the bundle and placing the files in there).
+# I also tried copying to the CMAKE_CURRENT_BINARY_DIR, but it ended up copying a whole BUILD/macOS/... layout into the bundle.
+# I guess I have a nasty edge case to fix in Blurrr.
+file(COPY ${PROJECT_SOURCE_DIR}/Schwab2ofx/ADDITIONAL_LICENSES.TXT
+	DESTINATION ${PROJECT_SOURCE_DIR}/resources/
+)
+file(COPY ${PROJECT_SOURCE_DIR}/Schwab2ofx/LICENSE.TXT
+	DESTINATION ${PROJECT_SOURCE_DIR}/resources/
+)
+file(COPY ${PROJECT_SOURCE_DIR}/Schwab2ofx/MyCombinedStockList.lua
+	DESTINATION ${PROJECT_SOURCE_DIR}/scripts/
+)
+file(COPY ${PROJECT_SOURCE_DIR}/Schwab2ofx/dkjson.lua
+	DESTINATION ${PROJECT_SOURCE_DIR}/scripts/
+)
+file(COPY ${PROJECT_SOURCE_DIR}/Schwab2ofx/helpers.lua
+	DESTINATION ${PROJECT_SOURCE_DIR}/scripts/
+)
+file(COPY ${PROJECT_SOURCE_DIR}/Schwab2ofx/schwab2ofx.lua
+	DESTINATION ${PROJECT_SOURCE_DIR}/scripts/
+)
+
+
 # Resource files
 if(BLURRR_USE_MANUAL_FILE_LISTING_FOR_RESOURCE_FILES)
 
 	# Add your user resource files here
 	list(APPEND BLURRR_USER_RESOURCE_FILES
-		${PROJECT_SOURCE_DIR}/../../ADDITIONAL_LICENSES.TXT
-		${PROJECT_SOURCE_DIR}/../../LICENSE.TXT
+
+		#${PROJECT_SOURCE_DIR}/Schwab2ofx/ADDITIONAL_LICENSES.TXT
+		#${PROJECT_SOURCE_DIR}/Schwab2ofx/LICENSE.TXT
+		${PROJECT_SOURCE_DIR}/resources/ADDITIONAL_LICENSES.TXT
+		${PROJECT_SOURCE_DIR}/resources/LICENSE.TXT
+
 		${PROJECT_SOURCE_DIR}/resources/main_dialog.led
 	)
 else()
@@ -54,12 +85,16 @@ if(BLURRR_USE_MANUAL_FILE_LISTING_FOR_SCRIPT_FILES)
 		#${PROJECT_SOURCE_DIR}/../../helpers.lua
 		#${PROJECT_SOURCE_DIR}/../../schwab2ofx.lua
 			
+		${PROJECT_SOURCE_DIR}/scripts/runconversion.lua
 		
 		${PROJECT_SOURCE_DIR}/scripts/MyCombinedStockList.lua
 		${PROJECT_SOURCE_DIR}/scripts/dkjson.lua
 		${PROJECT_SOURCE_DIR}/scripts/helpers.lua
 		${PROJECT_SOURCE_DIR}/scripts/schwab2ofx.lua
-		${PROJECT_SOURCE_DIR}/scripts/runconversion.lua
+		#${CMAKE_CURRENT_BINARY_DIR}/scripts/MyCombinedStockList.lua
+		#${CMAKE_CURRENT_BINARY_DIR}/scripts/dkjson.lua
+		#${CMAKE_CURRENT_BINARY_DIR}/scripts/helpers.lua
+		#${CMAKE_CURRENT_BINARY_DIR}/scripts/schwab2ofx.lua
 
 	)
 	list(APPEND BLURRR_USER_SCRIPT_FILES_JAVASCRIPT

@@ -1,0 +1,9 @@
+resources/ADDITIONAL_LICENSES.TXT
+resources/LICENSE.TXT
+scripts/MyCombinedStockList.lua
+scripts/dkjson.lua
+scripts/helpers.lua
+scripts/main.lua
+scripts/mobdebug.lua
+scripts/re.lua
+scripts/schwab2ofx.lua
